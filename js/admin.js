@@ -2,7 +2,7 @@ import { firebaseConfig } from './firebase-config.js';
 
 // 관리자 계정 1개 고정 로그인
 const ADMIN_EMAIL = 'admin';
-const ADMIN_PASSWORD = '1234';
+const ADMIN_PASSWORD = 'qwer1234!';
 
 const hasFirebase = !!firebaseConfig.apiKey;
 let db = null, fb = null, selectedSession = null, unsubscribers = [];
@@ -94,7 +94,7 @@ async function reply(){
 }
 function seed(){
   const inq=JSON.parse(localStorage.getItem('sj_inquiries')||'[]');
-  inq.unshift({id:crypto.randomUUID(),company:'샘플기업',manager:'홍길동',category:'기업행사',place:'서울',content:'기업 워크숍 행사 문의 샘플입니다.',createdAt:Date.now(),read:false});
+  inq.unshift({id:crypto.randomUUID(),company:'샘플기업',manager:'홍길동',category:'기업행사',place:'서울',content:'기업 워크숍 행사 문의입니다.',createdAt:Date.now(),read:false});
   localStorage.setItem('sj_inquiries',JSON.stringify(inq));
   const chats=JSON.parse(localStorage.getItem('sj_chats')||'[]');
   const sid='demo-'+Math.random().toString(16).slice(2,8);
@@ -103,7 +103,7 @@ function seed(){
   localStorage.setItem('sj_chats',JSON.stringify(chats));
   toast('샘플 데이터를 넣었습니다.'); renderLocal();
 }
-function clear(){ if(confirm('데모 데이터를 모두 삭제할까요?')){['sj_inquiries','sj_chats','sj_total'].forEach(k=>localStorage.removeItem(k)); renderLocal();} }
+function clear(){ if(confirm('데이터를 모두 삭제할까요?')){['sj_inquiries','sj_chats','sj_total'].forEach(k=>localStorage.removeItem(k)); renderLocal();} }
 function exportCsv(){
   const rows=[['회사명','담당자','행사유형','장소','내용','시간','읽음']];
   applySearch(hasFirebase ? (window._inq||[]) : localData().inq).forEach(x=>rows.push([x.company||'',x.manager||'',x.category||'',x.place||'',x.content||'',fmt(x.createdAt),x.read?'Y':'N']));
