@@ -15,101 +15,72 @@
       <div class="login-logo">SJ</div>
       <h1>관리자 로그인</h1>
       <p>SJ EVENT PLANNING 관리자 전용 페이지입니다.</p>
-      <label>관리자 아이디</label>
+      <label for="adminEmail">관리자 아이디</label>
       <input id="adminEmail" type="text" placeholder="관리자 아이디" autocomplete="username">
-      <label>비밀번호</label>
+      <label for="adminPw">비밀번호</label>
       <input id="adminPw" type="password" placeholder="비밀번호" autocomplete="current-password">
-      <button id="loginBtn">로그인</button>
+      <button id="loginBtn" class="primary-btn">로그인</button>
+      <div class="login-help">기본 계정: admin / 1234</div>
     </div>
   </div>
 
   <main class="dash" id="dash" hidden>
-    <aside>
-      <div class="brand">
-        <div class="logo small">SJ</div>
-        <div><b>관리자센터</b><span>SJ EVENT PLANNING</span></div>
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="logo small">SJ</div>
+          <div><b>관리자센터</b><span>SJ EVENT PLANNING</span></div>
+        </div>
+        <nav class="nav-tabs">
+          <button class="tab active" data-tab="overview">대시보드</button>
+          <button class="tab" data-tab="inquiries">행사문의 <em id="navInquiryBadge">0</em></button>
+          <button class="tab" data-tab="chats">실시간상담</button>
+          <button class="tab" data-tab="visitors">접속현황</button>
+          <button class="tab" data-tab="settings">설정</button>
+        </nav>
       </div>
-      <button class="tab active" data-tab="overview">대시보드</button>
-      <button class="tab" data-tab="inquiries">행사문의</button>
-      <button class="tab" data-tab="chats">실시간상담</button>
-      <button class="tab" data-tab="visitors">접속현황</button>
-      <button class="tab" data-tab="settings">설정</button>
-      <a href="index.html" target="_blank" rel="noopener">홈페이지 열기</a>
-      <div class="admin-profile">
-        <div class="avatar">A</div>
-        <div><b>최고관리자</b><span>admin · 접속 중</span></div>
+      <div class="side-bottom">
+        <a class="home-link" href="index.html" target="_blank" rel="noopener">홈페이지 열기</a>
+        <div class="admin-profile"><div class="avatar">A</div><div><b>최고관리자</b><span>admin · 접속 중</span></div></div>
+        <div class="security-note">관리자 계정은 <b>js/admin.js</b> 상단에서 변경할 수 있습니다.</div>
       </div>
     </aside>
 
     <section class="content">
-      <header>
-        <div>
-          <h1 id="pageTitle">대시보드</h1>
-          <p>문의, 상담, 접속 현황을 한 화면에서 관리합니다.</p>
-        </div>
-        <div class="header-actions">
-          <span id="nowTime"></span>
-          <button id="logoutBtn">로그아웃</button>
-        </div>
+      <header class="topbar">
+        <div><span class="eyebrow">ADMIN CENTER</span><h1 id="pageTitle">대시보드</h1><p>문의, 상담, 접속 현황을 한 화면에서 관리합니다.</p></div>
+        <div class="top-actions"><span class="status-pill"><i></i>온라인</span><span id="nowTime" class="now-time"></span><button id="logoutBtn">로그아웃</button></div>
       </header>
 
       <section class="panel active" id="overview">
         <div class="cards">
-          <div class="card"><span>오늘 방문자</span><b id="todayCount">0</b><em>오늘 기준</em></div>
-          <div class="card"><span>누적 방문자</span><b id="totalCount">0</b><em>전체 기간</em></div>
-          <div class="card"><span>실시간 접속자</span><b id="onlineCount">0</b><em>현재 접속 중</em></div>
-          <div class="card"><span>신규 문의</span><b id="newInquiryCount">0</b><em>읽지 않은 문의</em></div>
+          <div class="card accent"><span>오늘 방문자</span><b id="todayCount">0</b><small>오늘 기준</small></div>
+          <div class="card"><span>누적 방문자</span><b id="totalCount">0</b><small>전체 기간</small></div>
+          <div class="card"><span>실시간 접속자</span><b id="onlineCount">0</b><small>현재 접속 중</small></div>
+          <div class="card"><span>신규 문의</span><b id="newInquiryCount">0</b><small>읽지 않은 문의</small></div>
         </div>
         <div class="grid2">
-          <div class="box"><div class="box-head"><h2>최근 문의</h2><button class="mini" data-go="inquiries">전체 보기</button></div><div id="recentInquiries" class="list"></div></div>
-          <div class="box"><div class="box-head"><h2>최근 상담</h2><button class="mini" data-go="chats">상담 보기</button></div><div id="recentChats" class="list"></div></div>
+          <div class="box"><div class="box-head"><div><h2>최근 문의</h2><p>가장 최근 접수된 문의입니다.</p></div><button class="mini" data-go="inquiries">전체 보기</button></div><div id="recentInquiries" class="list empty-ready"></div></div>
+          <div class="box"><div class="box-head"><div><h2>최근 상담</h2><p>실시간 상담 메시지입니다.</p></div><button class="mini" data-go="chats">상담 보기</button></div><div id="recentChats" class="list empty-ready"></div></div>
         </div>
       </section>
 
       <section class="panel" id="inquiries">
-        <div class="toolbar">
-          <input id="inquirySearch" placeholder="회사명, 담당자, 행사유형, 장소, 내용 검색">
-          <button id="exportInquiries">CSV 다운로드</button>
-          <button id="clearRead">전체 읽음</button>
-        </div>
-        <div id="inquiryList" class="list big"></div>
+        <div class="box list-box"><div class="box-head"><div><h2>행사문의 관리</h2><p>접수된 문의를 검색, 읽음 처리, 삭제할 수 있습니다.</p></div></div><div class="toolbar"><div class="search-wrap"><span>검색</span><input id="inquirySearch" placeholder="회사명, 담당자, 행사유형, 장소, 내용 검색"></div><button id="exportInquiries">CSV 다운로드</button><button id="clearRead">전체 읽음</button></div><div id="inquiryList" class="list big empty-ready"></div></div>
       </section>
 
       <section class="panel" id="chats">
-        <div class="chat-admin">
-          <div class="session-list" id="sessionList"></div>
-          <div class="chat-view">
-            <div class="chat-title" id="chatTitle">상담을 선택하세요</div>
-            <div class="chat-log" id="adminChatLog"></div>
-            <div class="reply">
-              <input id="replyInput" placeholder="답변 입력">
-              <button id="replyBtn">답변 전송</button>
-            </div>
-          </div>
-        </div>
+        <div class="chat-admin"><div class="session-list-wrap"><div class="box-head compact"><div><h2>상담 세션</h2><p>고객 상담방 목록</p></div></div><div class="session-list" id="sessionList"></div></div><div class="chat-view"><div class="chat-title" id="chatTitle">상담을 선택하세요</div><div class="chat-log" id="adminChatLog"></div><div class="reply"><input id="replyInput" placeholder="답변 입력"><button id="replyBtn">전송</button></div></div></div>
       </section>
 
       <section class="panel" id="visitors">
-        <div class="cards small-cards">
-          <div class="card"><span>오늘 방문자</span><b id="vToday">0</b></div>
-          <div class="card"><span>누적 방문자</span><b id="vTotal">0</b></div>
-          <div class="card"><span>실시간 접속자</span><b id="vOnline">0</b></div>
-        </div>
-        <div class="box"><h2>최근 접속 로그</h2><div id="visitLog" class="list big"></div></div>
+        <div class="cards small-cards"><div class="card"><span>오늘 방문자</span><b id="vToday">0</b></div><div class="card"><span>누적 방문자</span><b id="vTotal">0</b></div><div class="card"><span>실시간 접속자</span><b id="vOnline">0</b></div></div>
+        <div class="box"><div class="box-head"><div><h2>최근 접속 로그</h2><p>Firebase 연결 시 방문자 기록이 표시됩니다.</p></div></div><div id="visitLog" class="list big empty-ready"></div></div>
       </section>
 
       <section class="panel" id="settings">
-        <div class="box settings-box">
-          <h2>운영 설정</h2>
-          <p>관리자 계정은 <code>js/admin.js</code> 파일 상단에서 변경합니다.</p>
-          <pre>const ADMIN_EMAIL = 'admin';
-const ADMIN_PASSWORD = '1234';</pre>
-          <p>Firebase 값을 <code>js/firebase-config.js</code>에 입력하면 문의/상담/방문자 데이터가 실시간 연동됩니다.</p>
-          <div class="settings-actions">
-            <button id="seedDemo">데이터 넣기</button>
-            <button id="clearAll" class="danger">전체 데이터 삭제</button>
-          </div>
-        </div>
+        <div class="settings-grid"><div class="box settings-box"><h2>관리자 계정</h2><p>현재 고정 로그인 방식입니다.</p><pre>const ADMIN_EMAIL = 'admin';
+const ADMIN_PASSWORD = '1234';</pre><p>아이디와 비밀번호를 바꾸려면 <code>js/admin.js</code> 상단만 수정하세요.</p></div><div class="box settings-box"><h2>데모 데이터</h2><p>Firebase 연결 전에는 같은 브라우저의 임시 데이터로 테스트할 수 있습니다.</p><div class="settings-actions"><button id="seedDemo">데이터 넣기</button><button id="clearAll" class="danger">전체 데이터 삭제</button></div></div></div>
       </section>
     </section>
   </main>
