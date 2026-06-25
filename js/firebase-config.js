@@ -7,5 +7,4 @@ export const firebaseConfig = {
   storageBucket: "waterbridge-lms.firebasestorage.app",
   messagingSenderId: "224313355988",
   appId: "1:224313355988:web:886787fb9402df4f8e9541",
-  measurementId: "G-XKFTYDRKXT"
 };
